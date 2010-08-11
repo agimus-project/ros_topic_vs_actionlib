@@ -12,6 +12,7 @@
 *.pch
 
 # Compiled Dynamic libraries
+*~
 *.so
 *.dylib
 *.dll
@@ -30,3 +31,12 @@
 *.exe
 *.out
 *.app
+/bin/
+/build/
+/lib/
+/msg_gen/
+/srv_gen/
+/srv/*/
+/msg/*/
+/src/*/srv/
+/src/*/msg/
