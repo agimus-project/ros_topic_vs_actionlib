@@ -38,7 +38,7 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
-#include <actionlib_benchmark/RoundtripAction.h>
+#include "ros_actionlib_benchmark/RoundtripAction.h"
 
 #include <cmath>
 
@@ -52,7 +52,7 @@ int main (int argc, char **argv)
 {
   ros::init(argc, argv, "roundtrip_client"); 
 
-  actionlib::SimpleActionClient<actionlib_benchmark::RoundtripAction> ac("roundtrip", true); 
+  actionlib::SimpleActionClient<ros_actionlib_benchmark::RoundtripAction> ac("roundtrip", true); 
   ac.waitForServer();
  
   unsigned int num_runs = 1;
@@ -68,7 +68,7 @@ int main (int argc, char **argv)
     ros::Rate rate(20);
 
     // send a goal to the action 
-    actionlib_benchmark::RoundtripGoal goal;
+    ros_actionlib_benchmark::RoundtripGoal goal;
     goal.start = ros::Time::now();
     ac.sendGoal(goal);
   
@@ -76,7 +76,7 @@ int main (int argc, char **argv)
     bool finished_before_timeout = ac.waitForResult(ros::Duration(30.0));
 
     if (finished_before_timeout) {
-      actionlib_benchmark::RoundtripResultConstPtr res;
+      ros_actionlib_benchmark::RoundtripResultConstPtr res;
       res = ac.getResult();
 
       if (num_runs == 1) {

@@ -1,21 +1,47 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 3.10)
+project(ros_actionlib_benchmark)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
 
-rosbuild_init()
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  actionlib
+  actionlib_msgs
+  message_generation
+  )
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+add_message_files(
+  FILES
+  RoundtripActionFeedback.msg
+  RoundtripActionGoal.msg
+  RoundtripAction.msg
+  RoundtripActionResult.msg
+  RoundtripFeedback.msg
+  RoundtripGoal.msg
+  RoundtripResult.msg
+)
 
-rosbuild_genmsg()
+# set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+# set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-rosbuild_add_boost_directories()
-rosbuild_add_executable(cpp_roundtrip_server src/cpp/roundtrip_server.cpp)
-rosbuild_add_executable(cpp_roundtrip_client src/cpp/roundtrip_client.cpp)
+
+generate_messages(DEPENDENCIES actionlib_msgs)
+
+
+catkin_package(
+  INCLUDE_DIRS
+  LIBRARIES ${PROJECT_NAME}
+  CATKIN_DEPENDS
+    roscpp
+    actionlib_msgs
+  DEPENDS 
+)
+
+add_executable(roundtrip_client src/cpp/roundtrip_client.cpp)
+add_executable(roundtrip_server src/cpp/roundtrip_server.cpp)
+
+target_link_libraries(roundtrip_client PUBLIC
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(roundtrip_server PUBLIC
+  ${catkin_LIBRARIES}
+)

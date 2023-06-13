@@ -37,7 +37,8 @@
 
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
-#include <actionlib_benchmark/RoundtripAction.h>
+#include "ros_actionlib_benchmark/RoundtripAction.h"
+
 
 class RoundtripAction
 {
@@ -49,7 +50,7 @@ public:
   {
   }
 
-  void executeCB(const actionlib_benchmark::RoundtripGoalConstPtr &goal)
+  void executeCB(const ros_actionlib_benchmark::RoundtripGoalConstPtr &goal)
   {
 
     __result.received = ros::Time::now();
@@ -60,10 +61,10 @@ public:
 
 protected:
   ros::NodeHandle __node_handle;
-  actionlib::SimpleActionServer<actionlib_benchmark::RoundtripAction> __as;
+  actionlib::SimpleActionServer<ros_actionlib_benchmark::RoundtripAction> __as;
   std::string __action_name;
   // create messages that are used to published feedback/result
-  actionlib_benchmark::RoundtripResult __result;
+  ros_actionlib_benchmark::RoundtripResult __result;
 };
 
 
