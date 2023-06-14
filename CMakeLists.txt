@@ -23,6 +23,7 @@ add_message_files(
 # set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 # set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+include_directories(SYSTEM ${catkin_INCLUDE_DIRS})
 
 generate_messages(DEPENDENCIES actionlib_msgs)
 
@@ -44,4 +45,10 @@ target_link_libraries(roundtrip_client PUBLIC
 )
 target_link_libraries(roundtrip_server PUBLIC
   ${catkin_LIBRARIES}
+)
+
+install(TARGETS roundtrip_client roundtrip_server
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
