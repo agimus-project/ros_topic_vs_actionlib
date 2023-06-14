@@ -1,3 +1,6 @@
+Building:
+=========
+catkin build ros_actionlib_benchmark -DCMAKE_BUILD_TYPE=RELEASE
 
 actionlib_benchmark: Simple actionlib benchmarks
 ================================================
